@@ -1,22 +1,4 @@
-* Copyright (c) 1994-2017 Synopsys, Inc.
-* This parameter file and the associated documentation are proprietary
-* to Synopsys, Inc.  This parameter file may only be used in accordance
-* with the terms and conditions of a written license agreement with
-* Synopsys, Inc.  All other use, reproduction, or distribution of this
-* parameter file is strictly prohibited.
 
-* [01Bou] V. Bougrov, M. E. Levinshtein, S. L. Rumyantsev, A. Zubrilov, Properties of Advanced
-*         Semiconductor Materials GaN, AlN, InN, BN, SiC, SiGe, John Wiley & Sons, New York, 2001
-* [73Bar] A. S. Barker, M. Ilegems, Infrared lattice vibrations and free-electron dispersion in GaN,
-*         Phys. Rev., B7, 1973
-* [01Gol] Y. Goldberg in M. E. Levinshtein, S. L. Rumyantsev, A. Zubrilov,Properties of Advanced
-*         Semiconductor Materials GaN, AlN, InN, BN, SiC, SiGe, John Wiley & Sons, New York, 2001, 31-47
-* [77SiC] E. K. Sichel, J. I. Pankove, Thermal conductivity of GaN 25-360K, Phys. Chem. Solids, 39, 3, 1977
-* [09Ton] H. Tong et al, Proc. of SPIE, vol. 7211, pp. 721103-1
-* [01Vur] I. Vurgaftman, J. R. Meyer, L. R. Ram-Mohan, Band parameters for III-V compound semiconductors
-*         and their alloys, Journal of Applied Physics, 89, 11, 2001
-* [03Vur] I. Vurgaftman, L. R. Ram-Mohan, Band parameters for III-V compound semiconductors
-*         and their alloys, Journal of Applied Physics, 94, 6, 2003
 
 * Mole dependent material: AlScN (x=0) = AlN
 * Mole dependent material: AlScN (x=1) = ScN
