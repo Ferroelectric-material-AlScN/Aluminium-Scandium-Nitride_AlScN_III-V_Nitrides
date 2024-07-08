@@ -1,0 +1,385 @@
+*-------------Created by SASTRA University ------------------
+*Ref-
+*1. http://www-ferp.ucsd.edu/LIB/PROPS/PANOS/al2o3.html
+*2. http://accuratus.com/alumox.html (epsilon = 9 for 96% Al2O3 what about remaining 4%. They are impurities) Note: this is for bulk not for thin film we are using. But currently unavailable properties are taken from it.:(
+*3. http://www.coorstek.com/materials/ceramics/alumina_ad-96.php
+*4. http://en.wikipedia.org/wiki/Aluminium_oxide
+*5. 2006, Koo, Journal of Korean Physical Society
+*6.http://www.tue.nl/fileadmin/content/faculteiten/tn/PMP/SolarLab_documents/C-Si_Workshop_Kessels.pdf
+*7.http://shodhganga.inflibnet.ac.in/bitstream/10603/5860/11/11_chapter%205.pdf
+*8. http://refractiveindex.info/?shelf=main&book=Al2O3&page=Malitson-o
+
+
+*Created by modifying Si3N4.par file.
+*epsilon	= 9   (Ref: 1, 2, and 3)
+*refractiveindex	= 1.76 (Ref: 4)and refractive Index Profile from Ref:8
+*kappa	= 0.25 (Ref: 2)
+*Lattice Specific Heat= 880 (Ref: 2)
+*h and eDOS effective mass
+*Resistivity = 10^17 ohm cm. 
+*	Resist0	= 1.0000e+17	# [ohm*cm]   (Ref: 7)
+*Note: Anisotropic Properties are just replicated the isotropic properties. Need to extract them.
+*Eg0	= 6.4	# [eV] (Ref: 5, 6)
+*Chi0	= 1.25# [eV] (Ref:  Chi0 is electron affinity .
+
+
+
+
+Epsilon
+{ *  Ratio of the permittivities of material and vacuum
+
+  * epsilon() = epsilon
+	epsilon	= 9	# [1]
+}
+
+
+Epsilon_aniso
+{ *  Ratio of the permittivities of material and vacuum
+
+  * epsilon() = epsilon
+	epsilon	= 9	# [1]
+}
+
+
+RefractiveIndex
+{ *  Optical Refractive Index
+
+  * refractiveindex() = refractiveindex * (1 + alpha * (T-Tpar))
+	Tpar	= 3.0000e+02	# [K]
+	refractiveindex	= 1.76	# [1]
+	alpha	= 2.0000e-04	# [1/K]
+
+  * Gain dependence of refractive index in active region:
+  * a) Linear model: delta n = a0 * ( (n+p)/(2 * N0) - 1)
+  * b) Logarithmic model: delta n = a0 * log ( (n+p)/(2 * N0) )
+  * where n/p are the carrier densities in the active region. 
+	a0	= 0.0000e+00	# [1]
+	N0	= 1.0000e+18	# [1/cm^3]
+}
+
+
+ComplexRefractiveIndex
+{ *  Complex refractive index model: n_complex = n + i*k (unitless)
+  *  
+  *  with n = n_0 + delta_n_lambda + delta_n_T + delta_n_carr + delta_n_gain 
+  *       k = k_0 + delta_k_lambda             + delta_k_carr                
+  
+  * Base refractive index and extinction coefficient: 
+  *     n_0, k_0 
+  
+  * Wavelength dependence (real and imag): 
+  *     Formula 0: delta_n_lambda = Cn_lambda * lambda + Dn_lambda * lambda^2 
+  *                delta_k_lambda = Ck_lambda * lambda + Dk_lambda * lambda^2 
+  *     Formula 1: Read tabulated values 
+  *                NumericalTable (...)  
+  *     Formula 2: Read tabulated values from file 
+  *                NumericalTable = <string> 
+  
+  * Temperature dependence (real): 
+  *     delta_n_T = n_0 * ( Cn_temp * (T-Tpar)) 
+  
+  * Carrier dependence (real) 
+  *     delta_n_carr = - Cn_carr * (const.) * (n/m_e + p/m_h) 
+  
+  * Carrier dependence (imag) 
+  *     delta_k_carr = 1 / (4*PI) * (wavelength^Gamma_k_carr_e*Ck_carr_e*n + wavelength^Gamma_k_carr_h*Ck_carr_h*p) 
+  
+  * Gain dependence (real) 
+  *     lin: delta_n_gain = Cn_gain * ( (n+p)/(2 * Npar) - 1) 
+  *     log: delta_n_gain = Cn_gain * log ( (n+p)/(2 * Npar ) )
+	n_0	= 2.74	# [1]
+	k_0	= 0.0000e+00	# [1]
+	Cn_lambda	= 0.0000e+00	# [um^-1]
+	Dn_lambda	= 0.0000e+00	# [um^-2]
+	Ck_lambda	= 0.0000e+00	# [um^-1]
+	Dk_lambda	= 0.0000e+00	# [um^-2]
+	Cn_temp	= 2.0000e-04	# [K^-1]
+	Cn_carr	= 1	# [1]
+	Ck_carr	= 0.0000e+00 ,	0.0000e+00	# [cm^2]
+	Gamma_k_carr	= 1 ,	1	# [1]
+	Cn_gain	= 0.0000e+00	# [1]
+	Npar	= 1.0000e+18	# [cm^-3]
+        Formula = 1
+        TableInterpolation = PositiveSpline, PositiveSpline
+        NumericalTable (
+ 
+                   
+0.2000	1.9127094080587 0;
+0.2065	1.8998877983536 0;
+0.2133	1.8882235599463 0;
+0.2203	1.8777446762354 0;
+0.2275	1.8682985747984 0;
+0.2349	1.859757418441 0;
+0.2426	1.8519174110987 0;
+0.2505	1.8448039892896 0;
+0.2587	1.8382585951889 0;
+0.2672	1.8322345043326 0;
+0.2759	1.8267479542496 0;
+0.2850	1.8216335887885 0;
+0.2943	1.8169687643807 0;
+0.3039	1.812662211763 0;
+0.3139	1.8086465749755 0;
+0.3241	1.8049747310816 0;
+0.3347	1.8015488081449 0;
+0.3457	1.7983552384705 0;
+0.3570	1.7954050494599 0;
+0.3687	1.792654904549 0;
+0.3807	1.7901123299044 0;
+0.3932	1.7877228296252 0;
+0.4060	1.7855131978094 0;
+0.4193	1.7834376078764 0;
+0.4330	1.7815032886078 0;
+0.4472	1.7796876970942 0;
+0.4618	1.7779954669163 0;
+0.4770	1.7763969806669 0;
+0.4926	1.7749069668851 0;
+0.5087	1.7735082113872 0;
+0.5253	1.7721946418157 0;
+0.5425	1.7709534510436 0;
+0.5602	1.7697870034397 0;
+0.5786	1.768678092594 0;
+0.5975	1.7676347594555 0;
+0.6170	1.7666467187031 0;
+0.6372	1.7657055418929 0;
+0.6581	1.7648083776856 0;
+0.6796	1.7639560666816 0;
+0.7018	1.7631412029905 0;
+0.7248	1.7623575309256 0;
+0.7485	1.7616058134504 0;
+0.7730	1.7608801757554 0;
+0.7983	1.7601781977445 0;
+0.8244	1.7594974153468 0;
+0.8513	1.7588353492177 0;
+0.8792	1.7581849835841 0;
+0.9079	1.7575488420438 0;
+0.9377	1.7569182191283 0;
+0.9683	1.7562973768044 0;
+1.0000	1.7556780777757 0;
+1.033	1.7550547342523 0;
+1.066	1.7544492215126 0;
+1.101	1.7538227008788 0;
+1.137	1.7531915603611 0;
+1.175	1.7525364667588 0;
+1.213	1.751889641765 0;
+1.253	1.7512147150232 0;
+1.294	1.7505264589423 0;
+1.336	1.7498225628591 0;
+1.380	1.7490839326181 0;
+1.425	1.7483249348844 0;
+1.471	1.7475432140301 0;
+1.520	1.7467019118788 0;
+1.569	1.7458498390026 0;
+1.621	1.7449319592359 0;
+1.674	1.7439802356172 0;
+1.728	1.742992131424 0;
+1.785	1.7419273828406 0;
+1.843	1.7408195373476 0;
+1.904	1.7396263439883 0;
+1.966	1.7383827319917 0;
+2.030	1.7370650289788 0;
+2.097	1.7356472403196 0;
+2.165	1.7341669205685 0;
+2.236	1.7325755211079 0;
+2.309	1.730889247653 0;
+2.385	1.7290784375914 0;
+2.463	1.7271600353641 0;
+2.543	1.7251280028472 0;
+2.627	1.7229226773359 0;
+2.712	1.7206148427182 0;
+2.801	1.7181145792243 0;
+2.893	1.715438147562 0;
+2.987	1.7126051747702 0;
+3.085	1.709543722848 0;
+3.186	1.7062709711188 0;
+3.290	1.7027737381029 0;
+3.398	1.6990024419669 0;
+3.509	1.6949749939614 0;
+3.624	1.6906368746825 0;
+3.742	1.6860063236089 0;
+3.865	1.6809814756374 0;
+3.991	1.6756189316007 0;
+4.122	1.6698063350772 0;
+4.257	1.663555792699 0;
+4.396	1.6568352356965 0;
+4.540	1.6495581507485 0;
+4.688	1.6417334442682 0;
+4.842	1.6332058556533 0;
+5.000	1.6240317502663 0;
+10.000	0.8416034164074 0;
+   ) 
+	Tpar	= 3.0000e+02	# [K]
+} 
+
+
+* SpectralConversion
+* { * Spectral Conversion Model
+*   No default model, user has to define.
+*   All wavelength parameters should be in nanometers.
+*   Choice of Analytic or NumericalTable selected in Physics section of region
+*  
+*   ConversionEfficiency = float     * ratio of absorbed photons that are reemitted.
+*   AbsorptionScaling = float        * scale absorption
+*   EmissionScaling = float          * scale emission
+*   Analytic (
+*     AbsorptionProfile = (
+*        Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+*        Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+*        ...
+*     )
+*     EmissionProfile = (
+*        Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+*        Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+*        ...
+*     )
+*   )
+*   NumericalTable (
+*     AbsorptionProfile = (
+*        lambda0 value0
+*        lambda1 value1
+*        ...
+*     )
+*     EmissionProfile = (
+*        lambda0 value0
+*        lambda1 value1
+*        ...
+*     )
+
+*   ConversionEfficiency = 1.0
+* }
+
+
+LatticeHeatCapacity
+{ *  lumped electron-hole-lattice heat capacity
+
+  * cv() = cv + cv_b * T + cv_c * T^2 + cv_d * T^3 
+	cv	= 2.78	# [J/(K cm^3)]
+	cv_b	= 0.0000e+00	# [J/(K^2 cm^3)]
+	cv_c	= 0.0000e+00	# [J/(K^3 cm^3)]
+	cv_d	= 0.0000e+00	# [J/(K^4 cm^3)]
+}
+
+
+Kappa
+{ *  Lattice thermal conductivity
+
+  * Formula = 1:
+  * kappa() = kappa + kappa_b * T + kappa_c * T^2 
+	kappa	= 0.25	# [W/(K cm)]
+	kappa_b	= 0.0000e+00	# [W/(K^2 cm)]
+	kappa_c	= 0.0000e+00	# [W/(K^3 cm)]
+}
+
+
+Kappa_aniso
+{ *  Lattice thermal conductivity
+
+  * Formula = 1:
+  * kappa() = kappa + kappa_b * T + kappa_c * T^2 
+	kappa	= 0.25	# [W/(K cm)]
+	kappa_b	= 0.0000e+00	# [W/(K^2 cm)]
+	kappa_c	= 0.0000e+00	# [W/(K^3 cm)]
+}
+
+Bandgap
+{ * Eg = Eg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 1.25	# [eV]
+	Eg0	= 6.4	# [eV]
+	alpha	= 0.0000e+00	# [eV K^-1]
+	beta	= 0.0000e+00	# [K]
+	alpha2	= 0.0000e+00	# [eV K^-1]
+	beta2	= 0.0000e+00	# [K]
+	EgMin	= -1.0000e+01	# [eV]
+	dEgMin	= 0.0000e+00	# [eV]
+	Tpar	= 0.0000e+00	# [K]
+}
+
+eDOSMass
+{
+  * For effective mass specification Formula1 (me approximation):
+  * or Formula2 (Nc300) can be used :
+	Formula	= 1	# [1]
+  * Formula1:
+  * me/m0 = [ (6 * mt)^2 *  ml ]^(1/3) + mm
+  * mt = a[Eg(0)/Eg(T)] 
+  * Nc(T) = 2(2pi*kB/h_Planck^2*me*T)^3/2 = 2.5094e19 ((me/m0)*(T/300))^3/2 
+	a	= 0.0000e+00	# [1]
+	ml	= 0.0000e+00	# [1]
+	mm	= 0.42	# [1]
+}
+
+hDOSMass
+{
+  * For effective mass specification Formula1 (mh approximation):
+  * or Formula2 (Nv300) can be used :
+	Formula	= 1	# [1]
+  * Formula1:
+  * mh =  m0*{[(a+bT+cT^2+dT^3+eT^4)/(1+fT+gT^2+hT^3+iT^4)]^(2/3) + mm}
+  * Nv(T) = 2(2pi*kB/h_Planck^2*mh*T)^3/2 = 2.5094e19 ((mh/m0)*(T/300))^3/2 
+	a	= 0	# [1]
+	b	= 0	# [K^-1]
+	c	= 0	# [K^-2]
+	d	= 0	# [K^-3]
+	e	= 0	# [K^-4]
+	f	= 0	# [K^-1]
+	g	= 0	# [K^-2]
+	h	= 0	# [K^-3]
+	i	= 0	# [K^-4]
+	mm	= 1	# [1]
+}
+
+QuantumPotentialParameters
+{ * gamma:  weighting factor for quantum potential
+  * theta:  weight for quadratic term
+  * xi:     weight for quasi Fermi potential
+  * eta:    weight for electrostatic potential
+  * nu :    weight for DOS mass change from stress
+	gamma	= 1 ,	1	# [1]
+	theta	= 0.5 ,	0.5	# [1]
+	xi	= 0.0000e+00 ,	0.0000e+00	# [1]
+	eta	= 0.0000e+00 ,	0.0000e+00	# [1]
+	nu	= 0.0000e+00 ,	0.0000e+00	# [1]
+}
+
+Makram-Ebeid
+{ * mt tunneling mass 
+  * Wph phonon energy 
+  * Wt thermal energy 
+  * Wopt optical energy of ionization 
+  * SumNumber series expansion limit 
+	mt	= 0.5 ,	0.5	# [1]
+	Wph	= 0.06	# [eV]
+	Wt	= 1.4	# [eV]
+	Wopt	= 2.8	# [eV]
+	SumNumber	= 49	# [1]
+}
+
+HoppingTransport:
+{ * DOSShape: DensityOfState distribution (Gaussian = 0),
+  * Nt: density of hopping sites (trapping sites),
+  * EnS: energy distribution standard deviation,
+  * En0: energy distribution peak from vacuum level,
+  * BM: average number of neighboring sites,
+  * Alpha: inverse of localization length,
+  * Sigma0: constant conductivity,
+  * HopFrequency: jump rate prefactor,
+  * See the manual for more details.
+	DOSShape	= 0 ,	0	# [1]
+	Conc	= 1.0000e+19 ,	1.0000e-05	# [cm^-3]
+	EnergySig	= 1.5 ,	1.5	# [eV]
+	EnergyMid	= 4.4 ,	4.4	# [eV]
+	BM	= 2.3 ,	2.3	# [1]
+	Alpha	= 1.0000e+06 ,	1.0000e+06	# [cm^-1]
+	Sigma0	= 1.0000e+12 ,	1.0000e+12	# [A*V^-1*cm^-1]
+	HopFrequency	= 1.0000e+12 ,	1.0000e+12	# [s^-1]
+}
+
+Resistivity
+{ * Resist(T) = Resist0 * ( 1 + TempCoef * ( T - 273 ) )
+	Resist0	= 1.0000e+17	# [ohm*cm]
+	TempCoef	= 4.5000e-03	# [1/K]
+}
+
+
