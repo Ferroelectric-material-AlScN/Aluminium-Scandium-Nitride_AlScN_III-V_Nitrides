@@ -1,0 +1,1251 @@
+* Copyright (c) 1994-2017 Synopsys, Inc.
+* This parameter file and the associated documentation are proprietary
+* to Synopsys, Inc.  This parameter file may only be used in accordance
+* with the terms and conditions of a written license agreement with
+* Synopsys, Inc.  All other use, reproduction, or distribution of this
+* parameter file is strictly prohibited.
+
+* [01Bou] V. Bougrov, M. E. Levinshtein, S. L. Rumyantsev, A. Zubrilov, Properties of Advanced
+*         Semiconductor Materials GaN, AlN, InN, BN, SiC, SiGe, John Wiley & Sons, New York, 2001
+* [73Bar] A. S. Barker, M. Ilegems, Infrared lattice vibrations and free-electron dispersion in GaN,
+*         Phys. Rev., B7, 1973
+* [01Gol] Y. Goldberg in M. E. Levinshtein, S. L. Rumyantsev, A. Zubrilov,Properties of Advanced
+*         Semiconductor Materials GaN, AlN, InN, BN, SiC, SiGe, John Wiley & Sons, New York, 2001, 31-47
+* [77SiC] E. K. Sichel, J. I. Pankove, Thermal conductivity of GaN 25-360K, Phys. Chem. Solids, 39, 3, 1977
+* [09Ton] H. Tong et al, Proc. of SPIE, vol. 7211, pp. 721103-1
+* [01Vur] I. Vurgaftman, J. R. Meyer, L. R. Ram-Mohan, Band parameters for III-V compound semiconductors
+*         and their alloys, Journal of Applied Physics, 89, 11, 2001
+* [03Vur] I. Vurgaftman, L. R. Ram-Mohan, Band parameters for III-V compound semiconductors
+*         and their alloys, Journal of Applied Physics, 94, 6, 2003
+
+* Mole dependent material: AlScN (x=0) = AlN
+* Mole dependent material: AlScN (x=1) = ScN
+
+Epsilon
+  {
+    * Ratio of the permittivities of material and vacuum
+    * epsilon() = epsilon
+    * Mole fraction dependent model.
+    * If only constant parameters are specified, those values will be
+    * used for any mole fraction instead of the interpolation below.
+    * Linear interpolation is used on the interval [0,1].
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    epsilon(1) = 89.93 #[1], see ScN
+    epsilon(0) = 10.3 #[1], see AlN      
+
+    * epsilon(1) = 9.7 #[1], see ScN
+    * epsilon(0) = 8.5 #[1], see AlN      
+  }
+
+Epsilon_aniso
+  {
+    * Ratio of the permittivities of material and vacuum
+    * epsilon() = epsilon
+    * Mole fraction dependent model.
+    * If only constant parameters are specified, those values will be
+    * used for any mole fraction instead of the interpolation below.
+    * Linear interpolation is used on the interval [0,1].
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    epsilon(1) = 9.74 #[1], ioffe database, ratio of 1.095 from [73Bar], Wurtzite, parallel to c-axis,
+      * higher values up to 10.5 are often used - e.g. when using 9.5 for normal to c-axis, original
+      * values from [73Bar] are 9.5 (normal to c-axis) and 10.4(parallel to c-axis)
+    epsilon(0) = 9.8 #[1], [97Mal], parallel to c-axis, ratio of 1.15, values up to 10.7 are used
+  }
+
+*  refractiveindex{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  ComplexRefractiveIndex { ... }
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+SpectralConversion
+  {
+    * Spectral Conversion Model
+    * No default model, user has to define.
+    * All wavelength parameters should be in nanometers.
+    * Choice of Analytic or NumericalTable selected in Physics section of region
+    *
+    * ConversionEfficiency = float     * ratio of absorbed photons that are reemitted.
+    * AbsorptionScaling = float        * scale absorption
+    * EmissionScaling = float          * scale emission
+    * Analytic (
+    *   AbsorptionProfile = (
+    *      Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+    *      Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+    *      ...
+    *   )
+    *   EmissionProfile = (
+    *      Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+    *      Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+    *      ...
+    *   )
+    * )
+    * NumericalTable (
+    *   AbsorptionProfile = (
+    *      lambda0 value0
+    *      lambda1 value1
+    *      ...
+    *   )
+    *   EmissionProfile = (
+    *      lambda0 value0
+    *      lambda1 value1
+    *      ...
+    *   )
+
+    ConversionEfficiency = 1.0
+  }
+
+LatticeHeatCapacity
+  {
+    * lumped electron-hole-lattice heat capacity
+    * cv() = cv + cv_b * T + cv_c * T^2 + cv_d * T^3
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    * without temperature dependence
+    * cv(0) = 3.0 #[J/(K cm^3)], see GaN
+    * cv(1) = 2.41 #[J/(K cm^3)], see AlN
+    * cv_b(0) = 0.0000e+00 #[J/(K^2 cm^3)]
+    * cv_b(1) = 0.0000e+00 #[J/(K^2 cm^3)]
+    * cv_c(0) = 0.0000e+00 #[J/(K^3 cm^3)]
+    * cv_c(1) = 0.0000e+00 #[J/(K^3 cm^3)]
+    * cv_d(0) = 0.0000e+00 #[J/(K^4 cm^3)]      
+    * cv_d(1) = 0.0000e+00 #[J/(K^4 cm^3)]
+f   
+    * with temperature dependence, see ScN.par
+    * absolut value at 300K normalized to [01Bou]
+    * dependence on temperature extracted from [77Bar] and [98Nip] in www.ioffe.ru
+    cv(1) = 0.9177 #[J/(K cm^3)]
+    cv_b(1) = 9.2626e-03 #[J/(K^2 cm^3)]
+    cv_c(1) = -9.1800e-06 #[J/(K^3 cm^3)]
+    cv_d(1) = 3.0900e-09 #[J/(K^4 cm^3)]  
+   
+    * with temperature dependence, see AlN.par
+    cv(0) = 0.36 #[J/(K cm^3)], Ioffe database, [84Kos]
+    cv_b(0) = 9.2626e-3 #[J/(K^2 cm^3)]
+    cv_c(0) = -9.1800e-6 #[J/(K^3 cm^3)]
+    cv_d(0) = 3.0900e-9 #[J/(K^4 cm^3)]        
+  }
+
+Kappa
+  {
+    * Lattice thermal conductivity
+    * Formula = 0:
+    * thermal resistivity = 1 / ( 1/kappa + 1/kappa_b * T + 1/kappa_c * T^2 )
+    * Formula = 1:
+    * thermal conductivity = kappa + kappa_b * T + kappa_c * T^2
+
+    Formula = 1
+
+    Xmax(0) = 0.0
+    Xmax(1) = 0.1
+    Xmax(2) = 0.2
+    Xmax(3) = 0.3
+    Xmax(4) = 0.4
+    Xmax(5) = 0.5
+    Xmax(6) = 0.6
+    Xmax(7) = 0.7
+    Xmax(8) = 0.8
+    Xmax(9) = 0.9
+    Xmax(10) = 1.0
+###
+    * values from 0.1 to 0.9 are from [09Ton]
+    * for mole fractions 0 and 1 see AlN and GaN parameter files
+    kappa(0) = 1.2561 #[W/(K*cm)]
+    kappa_b(0) = 0.0  
+    kappa_c(0) = 0.0
+    kappa(1) = 0.8 #[W/(K*cm)]
+    kappa_b(1) = 0.0
+    kappa_c(1) = 0.0
+    kappa(2) = 0.6 #[W/(K*cm)]
+    kappa_b(2) = 0.0
+    kappa_c(2) = 0.0
+    kappa(3) = 0.55 #[W/(K*cm)]
+    kappa_b(3) = 0.0
+    kappa_c(3) = 0.0
+    kappa(4) = 0.5 #[W/(K*cm)]
+    kappa_b(4) = 0.0
+    kappa_c(4) = 0.0
+    kappa(5) = 0.5 #[W/(K*cm)]
+    kappa_b(5) = 0.0
+    kappa_c(5) = 0.0
+    kappa(6) = 0.5 #[W/(K*cm)]
+    kappa_b(6) = 0.0
+    kappa_c(6) = 0.0
+    kappa(7) = 0.55 #[W/(K*cm)]
+    kappa_b(7) = 0.0
+    kappa_c(7) = 0.0
+    kappa(8) = 0.7 #[W/(K*cm)]
+    kappa_b(8) = 0.0
+    kappa_c(8) = 0.0
+    kappa(9) = 0.9 #[W/(K*cm)]
+    kappa_b(9) = 0.0
+    kappa_c(9) = 0.0
+    kappa(10) = 2.85 #[W/(K*cm)]
+    kappa_b(10) = 0.0
+    kappa_c(10) = 0.0
+  }
+
+*  Kappa_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  EnergyRelaxationTime{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  AvalancheFactors{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+Bandgap
+  {
+    Tpar = 0.0
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    * Chi0(0) = 4.064
+    Chi0(0) = 3.922
+    Chi0(1) = 1.999
+    B(Chi0(1)) = -0.35
+    C(Chi0(1)) = 0.0
+
+    Eg0(0) = 3.51
+    Eg0(1) = 6.1
+    B(Eg0(1)) = 0.8
+    C(Eg0(1)) = 0.0
+
+    alpha(0) = 9.14e-04
+    alpha(1) = 2.630e-03
+    B(alpha(1)) = 2.15e-3
+    C(alpha(1)) = 0.0
+
+    beta(0) = 8.25e+02
+    beta(1) = 2.0820e+03
+    B(beta(1)) = 1561.0
+    C(beta(1)) = 0.0
+  }
+
+*  FreeCarrierAbsorption{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+BandstructureParameters
+{
+  * Parameters for k.p bandstructure calculation:
+
+  * Zincblende crystals:
+  * Luttinger parameters gamma_1, gamma_2, gamma_3
+  * Spin-orbit split-off energy so
+  * Matrix element parameters for TE and TM modes ep_te and ep_tm
+
+  * Wurtzite crystals:
+  * Effective mass parameters A1, A2, A3, A4, A5, A6
+  * Spin-orbit split-off energy so
+  * Crystal-field split  energy cr
+  * Matrix element parameters for TE and TM modes ep_te and ep_tm
+  *
+  *
+
+  * Mole fraction dependent model.
+  * If only constant parameters are specified, those values will be
+  * used for any mole fraction instead of the interpolation below.
+  * Linear interpolation is used on the interval [0,1].
+gamma_1(0) = 6.85 # [1]
+gamma_1(1) = 6.85 # [1]
+gamma_2(0) = 2.1 # [1]
+gamma_2(1) = 2.1 # [1]
+gamma_3(0) = 2.9 # [1]
+gamma_3(1) = 2.9 # [1]
+so(0) = 0.019 # [eV]
+so(1) = 0.014 # [eV]
+ep_te(0) = 15.6 # [eV]
+ep_te(1) = 18.8 # [eV]
+ep_tm(0) = 13.8 # [eV]
+ep_tm(1) = 12.4 # [eV]
+A1(0) = -3.9500e+00 # [1]
+A1(1) = -7.2400e+00 # [1]
+A2(0) = -2.7000e-01 # [1]
+A2(1) = -5.1000e-01 # [1]
+A3(0) = 3.68 # [1]
+A3(1) = 6.73 # [1]
+A4(0) = -1.8400e+00 # [1]
+A4(1) = -3.3600e+00 # [1]
+A5(0) = -1.9200e+00 # [1]
+A5(1) = -3.3500e+00 # [1]
+A6(0) = -2.9100e+00 # [1]
+A6(1) = -4.7200e+00 # [1]
+cr(0) = -1.6400e-01 # [eV]
+cr(1) = 0.019 # [eV]
+}
+
+QWStrain
+{
+  * Zincblende crystals:
+  *   Parameters: a_nu, a_c, b, C_12, C_11
+  *   StrainConstant eps (formula = 1) or lattice constant
+  *   a0 (formula = 2) for energy shift of quantum-well
+  *   subbands.
+  *   a0(T) = a0 + alpha (T-Tpar)
+
+  * Wurtzite crystals:
+  *   Parameters: a_c, D1, D2, D3, D4, C_13, C_33
+  *   Lattice constants a0 and c0 (formula 2 must be used)
+  *   a0(T) = a0 + alpha (T-Tpar)
+  *   c0(T) = c0 + alpha (T-Tpar)
+
+ * Default formula = 1 # [1]
+  * Mole fraction dependent model.
+  * If only constant parameters are specified, those values will be
+  * used for any mole fraction instead of the interpolation below.
+  * Linear interpolation is used on the interval [0,1].
+a_nu(0) = 0.19 # [eV]
+a_nu(1) = 0.19 # [eV]
+a_c(0) = -4.0800e+00 # [eV]
+a_c(1) = -4.0800e+00 # [eV]
+b_shear(0) = 0.9163 # [eV]
+b_shear(1) = 0.9163 # [eV]
+C_11(0) = 11.879 # [1e-2 GPa]
+C_11(1) = 11.879 # [1e-2 GPa]
+C_12(0) = 5.376 # [1e-2 GPa]
+C_12(1) = 5.376 # [1e-2 GPa]
+eps(0) = 0.0000e+00 # [1]
+eps(1) = 0.0000e+00 # [1]
+a0(0) = 3.1120e-10 # [m]
+a0(1) = 3.1890e-10 # [m]
+alpha(0) = 0.0000e+00 # [m/K]
+alpha(1) = 0.0000e+00 # [m/K]
+D1(0) = -8.9000e-01 # [eV]
+D1(1) = -8.9000e-01 # [eV]
+D2(0) = 4.27 # [eV]
+D2(1) = 4.27 # [eV]
+D3(0) = 5.18 # [eV]
+D3(1) = 5.18 # [eV]
+D4(0) = -2.5900e+00 # [eV]
+D4(1) = -2.5900e+00 # [eV]
+C_13(0) = 1.27 # [1e-2 GPa]
+C_13(1) = 1 # [1e-2 GPa]
+C_33(0) = 3.82 # [1e-2 GPa]
+C_33(1) = 3.92 # [1e-2 GPa]
+c0(0) = 4.9820e-10 # [cm]
+c0(1) = 4.250e-10 # [cm]
+}
+
+eDOSMass
+  {
+    * For effective mass specificatition Formula1 (me approximation):
+    * or Formula2 (Nc300) can be used:
+
+    Formula = 1 #[1]
+    * me/m0 = [ (6 * mt)^2 *  ml ]^(1/3) + mm
+    * mt = a[Eg(0)/Eg(T)]
+    * Nc(T) = 2(2pi*kB/h_Planck^2*me*T)^3/2 = 2.540e19 ((me/m0)*(T/300))^3/2
+    Formula = 1 #[1]
+    a(0) = 0.0 #[1]
+    a(1) = 0.0 #[1]
+    ml(0) = 0.0 #[1]
+    ml(1) = 0.0 #[1]
+    mm(0) = 0.4 #[1], see AlN
+    mm(1) = 1.22 #[1], ScN
+
+    * Formula = 2 #[1]
+    * me/m0 = (Nc300/2.540e19)2/3
+    * Nc(T) = Nc300*(T/300)3/2
+    Nc300(1) = 3.7e18 #[cm^-3], ScN
+    Nc300(0) = 6.5e18 #[cm^-3], see AlN
+  }
+
+hDOSMass
+  {
+    * For effective mass specificatition Formula1 (mh approximation):
+    * or Formula2 (Nv300) can be used :
+
+    Formula = 1 #[1]
+    * mh = m0*{[(a+bT+cT^2+dT^3+eT^4)/(1+fT+gT^2+hT^3+iT^4)]^(2/3) + mm}
+    * Nv(T) = 2(2pi*kB/h_Planck^2*mh*T)^3/2 = 2.540e19 ((mh/m0)*(T/300))^3/2
+    a(0) = 0.0 #[1]
+    b(0) = 0.0 #[K^-1]
+    c(0) = 0.0 #[K^-2]
+    d(0) = 0.0 #[K^-3]
+    e(0) = 0.0 #[K^-4]
+    f(0) = 0.0 #[K^-1]
+    g(0) = 0.0 #[K^-2]
+    h(0) = 0.0 #[K^-3]
+    i(0) = 0.0 #[K^-4]
+    mm(0) = 7.26 #[1], see AlN
+    a(1) = 0.0 #[1]
+    b(1) = 0.0 #[K^-1]
+    c(1) = 0.0 #[K^-2]
+    d(1) = 0.0 #[K^-3]
+    e(1) = 0.0 #[K^-4]
+    f(1) = 0.0 #[K^-1]
+    g(1) = 0.0 #[K^-2]
+    h(1) = 0.0 #[K^-3]
+    i(1) = 0.0 #[K^-4]
+    mm(1) = 0.74 #[1], ScN
+
+    * Formula = 2 #[1]
+    * mh/m0 = (Nv300/2.540e19)2/3
+    * Nv(T) = Nv300*(T/300)3/2
+    * mass = 1.0*mo
+    Nv300(0) = 4.62e+19 #[cm-3], see GaN
+    Nv300(1) = 4.97e+20 #[cm-3], see AlN
+  }
+
+*  SchroedingerParameters{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  QuantumPotentialParameters { ... }
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+ConstantMobility
+  {
+    * Mole fraction dependent model.
+    * If only constant parameters are specified, those values will be
+    * used for any mole fraction instead of the interpolation below.
+    * Linear interpolation is used on the interval [0,1].
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    mumax(1) = 1.1700e+04, 1.37e+2 # [cm2/(Vs)
+    mumax(0) = 3.000e+02, 1.4000e+01 # [cm2/(Vs)]
+ 
+    Exponent = 1, 2.1 # [1]
+    mutunnel = 0.05, 0.05      
+  }
+
+*  ConstantMobility_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+DopingDependence:
+  {
+    * For doping dependent mobility model three formulas
+    * can be used. Formula1 is based on Masetti et al. approximation.
+    * Formula2 uses approximation, suggested by Arora.
+    * If formula=1, model suggested by Masetti et al. is used:
+    * mu_dop = mumin1 exp(-Pc/N) + (mu_const - mumin2)/(1+(N/Cr)^alpha)
+    * - mu1/(1+(Cs/N)^beta), with mu_const from ConstantMobility
+
+    #Masetti parameters                      
+    Xmax(0) = 0.0
+    Xmax(1) = 0.2
+    Xmax(2) = 0.5
+    Xmax(3) = 0.8
+    Xmax(4) = 1.0
+ 
+    formula = 1, 1
+                                   
+    mumin1(0) = 175.0, 1.0
+    mumin1(1) = 144.0, 1.0
+    mumin1(2) = 97.5, 1.0
+    mumin1(3) = 51.0, 1.0
+    mumin1(4) = 20.0, 1.0
+                     
+    mumin2(0) = 75.0, 0.0
+    mumin2(1) = 75.0, 0.0
+    mumin2(2) = 75.0, 0.0
+    mumin2(3) = 75.0, 0.0
+    mumin2(4) = 75.0, 0.0
+                     
+    mu1(0) = 20, 0.0
+    mu1(1) = 20, 0.0
+    mu1(2) = 20, 0.0
+    mu1(3) = 20, 0.0
+    mu1(4) = 20, 0.0
+                       
+    Pc(0) = 6.5e+15, 5.0e+18
+    Pc(1) = 6.5e+15, 5.0e+18                        
+    Pc(2) = 6.5e+15, 5.0e+18                        
+    Pc(3) = 6.5e+15, 5.0e+18                        
+    Pc(4) = 6.5e+15, 5.0e+18                        
+                       
+    Cr(0) = 9.5e+16,9.5e+16
+    Cr(1) = 9.5e+16,9.5e+16
+    Cr(2) = 9.5e+16,9.5e+16
+    Cr(3) = 9.5e+16,9.5e+16
+    Cr(4) = 9.5e+16,9.5e+16
+                                               
+    Cs(0) = 1.0e+16, 1.0e+16
+    Cs(1) = 1.0e+16, 1.0e+16
+    Cs(2) = 1.0e+16, 1.0e+16
+    Cs(3) = 1.0e+16, 1.0e+16
+    Cs(4) = 1.0e+16, 1.0e+16
+                                               
+    alpha(0) = 0.550, 0.9
+    alpha(1) = 0.620, 0.9      
+    alpha(2) = 0.725, 0.9      
+    alpha(3) = 0.830, 0.9      
+    alpha(4) = 0.900, 0.9      
+                               
+    beta(0) = 0.75, 0.0
+    beta(1) = 0.75, 0.0
+    beta(2) = 0.75, 0.0
+    beta(3) = 0.75, 0.0
+    beta(4) = 0.75, 0.0
+                       
+    #Arora parameters
+    Ar_mumin(0) = 160.0, 1.0 # [cm2/Vs]
+    Ar_mumin(1) = 128.1, 1.0 # [cm2/Vs]  
+    Ar_mumin(2) = 80.25, 1.0 # [cm2/Vs]
+    Ar_mumin(3) = 32.40, 1.0 # [cm2/Vs]
+    Ar_mumin(4) = 0.500, 1.0 # [cm2/Vs]
+
+    Ar_alm(0) = -1.02, -5.70E-01 #[1]                                          
+    Ar_alm(1) = -1.33, -5.70E-01 #[1]
+    Ar_alm(2) = -0.60, -5.70E-01 #[1]
+    Ar_alm(3) = -0.74, -5.70E-01 #[1]
+    Ar_alm(4) = -0.67, -5.70E-01 #[1]
+
+    Ar_mud(0) = 1300.0, 150.0 #[cm2/Vs]
+    Ar_mud(1) = 1066.1, 122.8 #[cm2/Vs]
+    Ar_mud(2) = 715.00, 82.00 #[cm2/Vs]
+    Ar_mud(3) = 364.00, 41.20 #[cm2/Vs]
+    Ar_mud(4) = 130.00, 14.00 #[cm2/Vs]
+
+    Ar_ald(0) = -3.84, -2.23E+00 #[1]
+    Ar_ald(1) = -1.75, -2.23E+00 #[1]
+    Ar_ald(2) = -2.08, -2.23E+00 #[1]
+    Ar_ald(3) = -2.04, -2.23E+00 #[1]
+    Ar_ald(4) = -3.43, -2.23E+00 #[1]
+
+    Ar_N0(0) = 3.0E+17, 7.0E+16 #[cm^(-3)]
+    Ar_N0(1) = 3.0E+17, 7.0E+16 #[cm^(-3)]
+    Ar_N0(2) = 3.0E+17, 7.0E+16 #[cm^(-3)]
+    Ar_N0(3) = 3.0E+17, 7.0E+16 #[cm^(-3)]
+    Ar_N0(4) = 3.0E+17, 7.0E+16 #[cm^(-3)]
+
+    Ar_alN(0) = 3.020, 2.4 #[1]
+    Ar_alN(1) = 6.020, 2.4 #[1]
+    Ar_alN(2) = 10.45, 2.4 #[1]psp
+    Ar_alN(3) = 20.65, 2.4 #[1]
+    Ar_alN(4) = 3.780, 2.4 #[1]
+
+    Ar_a(0) = 0.66, 0.9 #[1]
+    Ar_a(1) = 0.76, 0.9 #[1]
+    Ar_a(2) = 0.91, 0.9 #[1]
+    Ar_a(3) = 1.06, 0.9 #[1]
+    Ar_a(4) = 1.16, 0.9 #[1]
+
+    Ar_ala(0) = 0.81, -1.46E-01 #[1]
+    Ar_ala(1) = 1.44, -1.46E-01 #[1]
+    Ar_ala(2) = 2.00, -1.46E-01 #[1]
+    Ar_ala(3) = 0.01, -1.46E-01 #[1]
+    Ar_ala(4) = 0.86, -1.46E-01 #[1]  
+  }
+
+*  PhuMob{...}
+*  Philips Unified Mobility Model:
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  EnormalDependence{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  EnormalDependence_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  NegInterfaceChargeMobility{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  NegInterfaceChargeMobility_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  PosInterfaceChargeMobility{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  PosInterfaceChargeMobility_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  Coulomb2DMobility{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  Coulomb2DMobility_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  HighFieldDependence{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+*  HighFieldDependence_aniso{...}
+*  By default, for mole fraction dependency of parameters
+*  of the model, the following linear interpolation is applied
+*  between two materials: P = x * P(AlN) + (1-x) * P(GaN)
+*  where P(m) is a parameter of material m.
+*  If the parameters are specified, then its values
+*  will be used instead of the interpolation.
+
+TransferredElectronEffect2:
+{ * Transferred Electron Effect 2:
+  *
+  *                mu_lowfield + mu1 * (F/E0)^alpha + vsat * F^(beta-1) / E1^beta
+  * mu_highfield = --------------------------------------------------------------
+  *                            1 + gamma * (F/E0)^alpha + (F/E1)^beta
+  *
+Xmax(0) = 0.0, 0.0 #[1]
+Xmax(1) = 0.2, 0.2 #[1]
+Xmax(2) = 0.5, 0.5 #[1]
+Xmax(3) = 0.8, 0.8 #[1]
+Xmax(4) = 1.0, 1.0 #[1]
+
+* parameter mu1:
+mu1(0) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(1) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(1)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(1)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(2) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(2)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(2)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(3) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(3)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(3)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(4) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(4)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(4)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+
+* parameter E0:
+E0(0) = 2.2089e+05, 4.0000e+03 #[V/cm]
+E0(1) = 2.4558e+05, 4.0000e+03 #[V/cm]
+B(E0(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(2) = 3.0455e+05, 4.0000e+03 #[V/cm]
+B(E0(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(3) = 3.8624e+05, 4.0000e+03 #[V/cm]
+B(E0(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(4) = 4.4703e+05, 4.0000e+03 #[V/cm]
+B(E0(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+
+* parameter E1:
+E1(0) = 2.2089e+05, 4.0000e+03 #[V/cm]
+E1(1) = 2.4558e+05, 4.0000e+03 #[V/cm]
+B(E1(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(2) = 3.0455e+05, 4.0000e+03 #[V/cm]
+B(E1(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(3) = 3.8624e+05, 4.0000e+03 #[V/cm]
+B(E1(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(4) = 4.4703e+05, 4.0000e+03 #[V/cm]
+B(E1(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+
+* parameter alpha:
+alpha(0) = 0.7857, 0.0000e+00 #[1]
+alpha(1) = 0.7897, 0.0000e+00 #[1]
+B(alpha(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(1)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(2) = 0.808, 0.0000e+00 #[1]
+B(alpha(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(2)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(3) = 0.8324, 0.0000e+00 #[1]
+B(alpha(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(3)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(4) = 0.8554, 0.0000e+00 #[1]
+B(alpha(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+* parameter beta:
+beta(0) = 7.2044, 4 #[1]
+beta(1) = 7.8138, 4 #[1]
+B(beta(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(1)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(2) = 9.4438, 4 #[1]
+B(beta(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(2)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(3) = 12.5795, 4 #[1]
+B(beta(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(3)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(4) = 17.3681, 4 #[1]
+B(beta(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+* parameter gamma:
+gamma(0) = 6.1973, 0.0000e+00 #[1]
+gamma(1) = 6.9502, 0.0000e+00 #[1]
+B(gamma(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(1)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(2) = 8.0022, 0.0000e+00 #[1]
+B(gamma(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(2)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(3) = 8.6037, 0.0000e+00 #[1]
+B(gamma(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(3)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(4) = 8.7253, 0.0000e+00 #[1]
+B(gamma(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+}
+
+TransferredElectronEffect2_aniso:
+{ * Transferred Electron Effect 2:
+  *
+  *                mu_lowfield + mu1 * (F/E0)^alpha + vsat * F^(beta-1) / E1^beta
+  * mu_highfield = --------------------------------------------------------------
+  *                            1 + gamma * (F/E0)^alpha + (F/E1)^beta
+  *
+Xmax(0) = 0.0, 0.0 #[1]
+Xmax(1) = 0.2, 0.2 #[1]
+Xmax(2) = 0.5, 0.5 #[1]
+Xmax(3) = 0.8, 0.8 #[1]
+Xmax(4) = 1.0, 1.0 #[1]
+
+* parameter mu1:
+mu1(0) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(1) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(1)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(1)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(2) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(2)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(2)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(3) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(3)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(3)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+mu1(4) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+B(mu1(4)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+C(mu1(4)) = 0.0000e+00, 0.0000e+00 #[cm^2/Vs]
+
+* parameter E0:
+E0(0) = 2.2089e+05, 4.0000e+03 #[V/cm]
+E0(1) = 2.4558e+05, 4.0000e+03 #[V/cm]
+B(E0(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(2) = 3.0455e+05, 4.0000e+03 #[V/cm]
+B(E0(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(3) = 3.8624e+05, 4.0000e+03 #[V/cm]
+B(E0(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E0(4) = 4.4703e+05, 4.0000e+03 #[V/cm]
+B(E0(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E0(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+
+* parameter E1:
+E1(0) = 2.2089e+05, 4.0000e+03 #[V/cm]
+E1(1) = 2.4558e+05, 4.0000e+03 #[V/cm]
+B(E1(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(1)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(2) = 3.0455e+05, 4.0000e+03 #[V/cm]
+B(E1(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(2)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(3) = 3.8624e+05, 4.0000e+03 #[V/cm]
+B(E1(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(3)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+E1(4) = 4.4703e+05, 4.0000e+03 #[V/cm]
+B(E1(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+C(E1(4)) = 0.0000e+00, 0.0000e+00 #[V/cm]
+
+* parameter alpha:
+alpha(0) = 0.7857, 0.0000e+00 #[1]
+alpha(1) = 0.7897, 0.0000e+00 #[1]
+B(alpha(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(1)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(2) = 0.808, 0.0000e+00 #[1]
+B(alpha(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(2)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(3) = 0.8324, 0.0000e+00 #[1]
+B(alpha(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(3)) = 0.0000e+00, 0.0000e+00 #[1]
+alpha(4) = 0.8554, 0.0000e+00 #[1]
+B(alpha(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(alpha(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+* parameter beta:
+beta(0) = 7.2044, 4 #[1]
+beta(1) = 7.8138, 4 #[1]
+B(beta(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(1)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(2) = 9.4438, 4 #[1]
+B(beta(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(2)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(3) = 12.5795, 4 #[1]
+B(beta(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(3)) = 0.0000e+00, 0.0000e+00 #[1]
+beta(4) = 17.3681, 4 #[1]
+B(beta(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(beta(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+* parameter gamma:
+gamma(0) = 6.1973, 0.0000e+00 #[1]
+gamma(1) = 6.9502, 0.0000e+00 #[1]
+B(gamma(1)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(1)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(2) = 8.0022, 0.0000e+00 #[1]
+B(gamma(2)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(2)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(3) = 8.6037, 0.0000e+00 #[1]
+B(gamma(3)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(3)) = 0.0000e+00, 0.0000e+00 #[1]
+gamma(4) = 8.7253, 0.0000e+00 #[1]
+B(gamma(4)) = 0.0000e+00, 0.0000e+00 #[1]
+C(gamma(4)) = 0.0000e+00, 0.0000e+00 #[1]
+
+}
+
+*******************************************************************
+*  Parameters for the recombination models below were taken
+*  from GaAs and require calibration for accurate simulations
+*******************************************************************
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+taumin = 0.0000e+00 , 0.0000e+00 # [s]
+taumax = 1.0000e-09 , 1.0000e-09 # [s]
+Nref = 1.0000e+16 , 1.0000e+16 # [cm^(-3)]
+gamma = 1 , 1 # [1]
+Talpha = 0.0000e+00 , 0.0000e+00 # [1]
+Tcoeff = 0.0000e+00 , 0.0000e+00 # [1]
+Etrap = 0.0000e+00 # [eV]
+}
+
+vanOverstraetendeMan
+  {
+    Xmax(0) = 0.0
+    Xmax(1) = 0.2
+    Xmax(2) = 0.4
+    Xmax(3) = 0.6
+    Xmax(4) = 0.8
+    Xmax(5) = 1.0
+
+    #The parameter set is based on the papers [97Ogu] and [02Bul].
+    #GaN data for electrons and holes are extracted from experiments in [97Ogu] in order to
+    #align to the GaN.par parameter file. For all other mole fractions and for AlN the parameters
+    #are either taken from or fitted to [02Bul].
+                 
+    a(low)(0) = 2.9000e+8, 5.4100e+6 #GaN, fitted to data from [97Ogu]
+    a(low)(1) = 1.5126e+7, 1.5126e+7 #taken from [02Bul]
+    a(low)(2) = 2.0647e+7, 2.0647e+7 #taken from [02Bul]  
+    a(low)(3) = 1.7974e+7, 1.7974e+7 #taken from [02Bul]
+    a(low)(4) = 1.2993e+7, 1.2993e+7 #taken from [02Bul]
+    a(low)(5) = 1.2600e+7, 5.4100e+6 #fitted to data from [02Bul] for electrons and GaN data for holes
+
+    a(high)(0) = 2.9000e+8, 5.4100e+6 #GaN, fitted to data from [97Ogu]
+    a(high)(1) = 1.5126e+7, 1.5126e+7 #taken from [02Bul]  
+    a(high)(2) = 2.0647e+7, 2.0647e+7 #taken from [02Bul]
+    a(high)(3) = 1.7974e+7, 1.7974e+7 #taken from [02Bul]
+    a(high)(4) = 1.2993e+7, 1.2993e+7 #taken from [02Bul]
+    a(high)(5) = 1.2600e+7, 5.4100e+6 #fitted to data from [02Bul] for electrons and GaN data for holes
+
+    b(low)(0) = 3.4000e+7, 1.9600e+7 #GaN, fitted to data from [97Ogu]
+    b(low)(1) = 3.1671e+7, 3.1671e+7 #taken from [02Bul]
+    b(low)(2) = 3.6625e+7, 3.6625e+7 #taken from [02Bul]
+    b(low)(3) = 3.7775e+7, 3.7775e+7 #taken from [02Bul]
+    b(low)(4) = 3.6337e+7, 3.6337e+7 #taken from [02Bul]
+    b(low)(5) = 3.9200e+7, 1.9600e+7 #fitted to data from  [02Bul] for electrons and GaN data for holes
+
+    b(high)(0) = 3.4000e+7, 1.9600e+7 #GaN, fitted to data from [97Ogu]
+    b(high)(1) = 3.1671e+7, 3.1671e+7 #taken from [02Bul]
+    b(high)(2) = 3.6625e+7, 3.6625e+7 #taken from [02Bul]
+    b(high)(3) = 3.7775e+7, 3.7775e+7 #taken from [02Bul]
+    b(high)(4) = 3.6337e+7, 3.6337e+7 #taken from [02Bul]
+    b(high)(5) = 3.9200e+7, 1.9600e+7 #fitted to data from [02Bul] for electrons and GaN data for holes
+
+    E0(0) = 1.0, 1.0
+    E0(1) = 1.0, 1.0
+    E0(2) = 1.0, 1.0
+    E0(3) = 1.0, 1.0
+    E0(4) = 1.0, 1.0
+    E0(5) = 1.0, 1.0
+
+    hbarOmega(0) = 0.066, 0.066
+    hbarOmega(1) = 0.068, 0.068
+    hbarOmega(2) = 0.070, 0.070
+    hbarOmega(3) = 0.072, 0.072
+    hbarOmega(4) = 0.073, 0.073
+    hbarOmega(5) = 0.076, 0.076
+
+    #The dataset below bases on the paper of Bulutay [02Bul] for a and b          
+    #a(low)(0) = 1.1438e+7, 1.1438e+7
+    #a(low)(1) = 1.5126e+7, 1.5126e+7
+    #a(low)(2) = 2.0647e+7, 2.0647e+7
+    #a(low)(3) = 1.7974e+7, 1.7974e+7
+    #a(low)(4) = 1.2993e+7, 1.2993e+7
+    #a(low)(5) = 8.8750e+6, 8.8750e+6
+
+    #a(high)(0) = 1.1438e+7, 1.1438e+7
+    #a(high)(1) = 1.5126e+7, 1.5126e+7
+    #a(high)(2) = 2.0647e+7, 2.0647e+7
+    #a(high)(3) = 1.7974e+7, 1.7974e+7
+    #a(high)(4) = 1.2993e+7, 1.2993e+7
+    #a(high)(5) = 8.8750e+6, 8.8750e+6
+                       
+    #b(low)(0) = 2.3893e+7, 2.3893e+7
+    #b(low)(1) = 3.1671e+7, 3.1671e+7
+    #b(low)(2) = 3.6625e+7, 3.6625e+7
+    #b(low)(3) = 3.7775e+7, 3.7775e+7
+    #b(low)(4) = 3.6337e+7, 3.6337e+7
+    #b(low)(5) = 3.7590e+7, 3.7590e+7
+
+    #b(high)(0) = 2.3893e+7,2.3893e+7
+    #b(high)(1) = 3.1671e+7,3.1671e+7
+    #b(high)(2) = 3.6625e+7,3.6625e+7
+    #b(high)(3) = 3.7775e+7,3.7775e+7
+    #b(high)(4) = 3.6337e+7,3.6337e+7
+    #b(high)(5) = 3.7590e+7,3.7590e+7
+
+    #E0(0)= 4.0000e+5, 4.0000e+5
+    #E0(1)= 4.0000e+5, 4.0000e+5
+    #E0(2)= 4.0000e+5, 4.0000e+5
+    #E0(3)= 4.0000e+5, 4.0000e+5
+    #E0(4)= 4.0000e+5, 4.0000e+5
+    #E0(5)= 4.0000e+5, 4.0000e+5
+
+    #hbarOmega(0) = 0.06, 0.06
+    #hbarOmega(1) = 0.06, 0.06
+    #hbarOmega(2) = 0.06, 0.06
+    #hbarOmega(3) = 0.06, 0.06
+    #hbarOmega(4) = 0.06, 0.06
+    #hbarOmega(5) = 0.06, 0.06
+  }
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+A = 1.0000e-30 , 1.0000e-30 # [cm^6/s]
+B = 0.0000e+00 , 0.0000e+00 # [cm^6/s]
+C = 0.0000e+00 , 0.0000e+00 # [cm^6/s]
+H = 0.0000e+00 , 0.0000e+00 # [1]
+N0 = 1.0000e+18 , 1.0000e+18 # [cm^(-3)]
+}
+
+RadiativeRecombination * coefficients:
+{ * R_Radiative = C (n p - ni_eff^2)
+C = 2.0000e-10 # [cm^3/s]
+}
+
+Piezoelectric_polarization
+  {
+    * The 'strain' model computes the polarization vector as follows:
+    *  [P_x]   [psp_x]
+    *  [P_y] = [psp_y]
+    *  [P_z]   [psp_z + 2*d31*strain*(c11+c12-2*c13^2/c33)]
+    *  strain = (1-relax)*(a0-a)/a
+    * The 'stress' model computes the polarization vector as follows:
+    *  [P_x]   [psp_x]   [d11 d12 d13 d14 d15 d16]   [stress_XX]
+    *  [P_y] = [psp_y] + [d21 d22 d23 d24 d25 d26] * [stress_YY]
+    *  [P_z]   [psp_z]   [d31 d32 d33 d34 d35 d36]   [stress_ZZ]
+    *                                                [stress_YZ]
+    *                                                [stress_XZ]
+    *                                                [stress_XY]
+    * Parameters:
+    *  [psp_x]: spontaneous polarization vector,
+    *  [psp_y]  defined in crystal system [C/cm^2]
+    *  [psp_z]
+    *  c11, c12, c13, c33: stiffness constants, defined in crystal system [Pa]
+    *  a0: strained lattice constant [Angstrem]
+    *  a: unstrained lattice constant [Angstrem]
+    *  relax: relaxation parameter [1]
+    *  d11 ... d36: piezoelectric coefficients, defined in crystal system [cm/V]
+    * Fields:
+    *  [stress_XX]: stress tensor, defined in stress system [Pa]
+    *  [stress_YY]  
+    *  [stress_ZZ]
+    *  [stress_YZ]
+    *  [stress_XZ]
+    *  [stress_XY]
+    *  [P_x]: polarization vector, defined in simulation system [C/cm^2]
+    *  [P_y]  
+    *  [P_z]
+    * Coordinate systems:
+    *   The simulation system is defined relative to the crystal system. For example:
+    *    LatticeParameters
+    *      {
+    *        X = (1, 0,  0)
+    *        Y = (0, 0, -1)
+    *      }
+    *   The stress coordinate system is defined relative to the simulation system. For example:
+    *     Physics
+    *       {
+    *         Piezo
+    *           (
+    *             OriKddX = (-0.96  0.28  0)
+    *             OriKddY = ( 0.28  0.96  0)
+    *             Stress = (1e9  2e9  3e9  4e9  5e9  6e9) #[Pa]
+    *           )
+    *       }
+    * To compute the polarization vector, the stress tensor is first
+    * transformed from the stress system to the crystal system.  Then
+    * the polarization vector is evaluated according to the 'strain' or
+    * 'stress' model above.  Finally, the polarization vector is transformed
+    * from the crystal system to the simulation system.
+
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    formula = 1
+
+    relax = 0.0
+
+    * all coefficients for Wurtzite
+    d11(0) = 0.0
+    d12(0) = 0.0
+    d13(0) = 0.0
+    d14(0) = 0.0
+    d15(0) = 3.1e-10
+    d16(0) = 0.0
+    d21(0) = 0.0
+    d22(0) = 0.0
+    d23(0) = 0.0
+    d24(0) = 3.1e-10
+    d25(0) = 0.0
+    d26(0) = 0.0
+    d31(0) = -1.6e-10
+    d32(0) = -1.6e-10
+    d33(0) = 3.1e-10
+    d34(0) = 0.0
+    d35(0) = 0.0
+    d36(0) = 0.0
+
+    d11(1) = 0.0
+    d12(1) = 0.0
+    d13(1) = 0.0
+    d14(1) = 0.0
+    d15(1) = 3.6e-10
+    d16(1) = 0.0
+    d21(1) = 0.0
+    d22(1) = 0.0
+    d23(1) = 0.0
+    d24(1) = 3.6e-10
+    d25(1) = 0.0
+    d26(1) = 0.0
+    d31(1) = -2.1e-10
+    d32(1) = -2.1e-10
+    d33(1) = 5.4e-10
+    d34(1) = 0.0
+    d35(1) = 0.0
+    d36(1) = 0.0
+
+    psp_x(0) = 0.0
+    psp_y(0) = 0.0
+    psp_z(0) = -8.90000e-06
+
+    psp_x(1) = 0.0
+    psp_y(1) = 0.0
+    psp_z(1) = -87.4e-6
+    B(psp_z(0)) = -2.10e-06
+    C(psp_z(0)) = 0.0
+
+    c11(1) = 2.8512e11
+    c12(1) = 1.8057e11
+    c13(1) = 1.417e11
+    c14(1) = 0.0
+    c15(1) = 0.0
+    c16(1) = 0.0
+    c21(1) = 1.8057e11
+    c22(1) = 2.8512e11
+    c23(1) = 1.417e11
+    c24(1) = 0.0
+    c25(1) = 0.0
+    c26(1) = 0.0
+    c31(1) = 1.417e11
+    c32(1) = 1.417e11
+    c33(1) = -1.5517e11
+    c34(1) = 0.0
+    c35(1) = 0.0
+    c36(1) = 0.0
+    c41(1) = 0.0
+    c42(1) = 0.0
+    c43(1) = 0.0
+    c44(1) = 1.764e11
+    c45(1) = 0.0
+    c46(1) = 0.0
+    c51(1) = 0.0
+    c52(1) = 0.0
+    c53(1) = 0.0
+    c54(1) = 0.0
+    c55(1) = 1.764e11
+    c56(1) = 0.0
+    c61(1) = 0.0
+    c62(1) = 0.0
+    c63(1) = 0.0
+    c64(1) = 0.0
+    c65(1) = 0.0
+    c66(1) = 0.52275e11
+
+    c11(0) = 3.96e11
+    c12(0) = 1.37e11
+    c13(0) = 1.08e11
+    c14(0) = 0.0
+    c15(0) = 0.0
+    c16(0) = 0.0
+    c21(0) = 1.37e11
+    c22(0) = 3.96e11
+    c23(0) = 1.08e11
+    c24(0) = 0.0
+    c25(0) = 0.0
+    c26(0) = 0.0
+    c31(0) = 1.08e11
+    c32(0) = 1.08e11
+    c33(0) = 3.73e11
+    c34(0) = 0.0
+    c35(0) = 0.0
+    c36(0) = 0.0
+    c41(0) = 0.0
+    c42(0) = 0.0
+    c43(0) = 0.0
+    c44(0) = 1.16e11
+    c45(0) = 0.0
+    c46(0) = 0.0
+    c51(0) = 0.0
+    c52(0) = 0.0
+    c53(0) = 0.0
+    c54(0) = 0.0
+    c55(0) = 1.16e11
+    c56(0) = 0.0
+    c61(0) = 0.0
+    c62(0) = 0.0
+    c63(0) = 0.0
+    c64(0) = 0.0
+    c65(0) = 0.0
+    c66(0) = 1.295e11
+
+    e31(1) = -1.353e-04 #[C/cm^2], e31=d31*(c11+c12)+d33*c13
+    e32(1) = -1.353e-04 #[C/cm^2], e32=e31
+    e33(1) = 9.1250e-04 #[C/cm^2], e33=2*d31*c13+d33*c33
+    e15(1) = 3.08-05 #[C/cm^2], e15=d15*c44
+    e24(1) = 3.08e-05 #[C/cm^2], e24=e15
+
+    e31(0) = -5.930e-05 #[C/cm^2], e31=d31*(c11+c12)+d33*c13
+    e32(0) = -5.930e-05 #[C/cm^2], e32=e31
+    e33(0) = 1.5606e-04 #[C/cm^2], e33=2*d31*c13+d33*c33
+    e15(0) = 4.1760e-05 #[C/cm^2], e15=d15*c44
+    e24(0) = 4.1760e-05 #[C/cm^2], e24=e15
+
+    a0 = 3.112
+    a(1) = 3.741
+
+    a(0) = 3.112
+ }
+
+* BarrierTunneling {}
+
+* QuantumPotentialParameters {}
+           
+LatticeParameters
+  {
+    * Default orientation for 2D simulations with Y-axis pointing down
+    * X = (1, 0, 0)
+    * Y = (0, 0,-1)
+    * S[i][j] - elasticity modulus; i,j = 1,2,...6 and j>=i.
+    * CrystalSystem is symmetry, used ONLY to define the elasticity matrix.
+    * Cubic (CrystalSystem=0): S[1][1],S[1][2],S[4][4]
+    * Hexagonal (CrystalSystem=1): S[1][1],S[1][2],S[1][3],S[3][3],S[4][4]
+   
+    Xmax(0) = 0.0
+    Xmax(1) = 1.0
+
+    S[1][1](0) =  3.09e-01 # [1e-12 cm^2/din]
+    S[1][2](0) = -9.96e-02 # [1e-12 cm^2/din]
+    S[1][3](0) = -5.57e-02 # [1e-12 cm^2/din]
+    S[3][3](0) =  2.81e-01 # [1e-12 cm^2/din]
+    S[4][4](0) =  9.52e-01 # [1e-12 cm^2/din]
+    S[1][1](1) =  2.99e-01 # [1e-12 cm^2/din]
+    S[1][2](1) = -8.70e-02 # [1e-12 cm^2/din]
+    S[1][3](1) = -6.20e-02 # [1e-12 cm^2/din]
+    S[3][3](1) =  3.04e-01 # [1e-12 cm^2/din]
+    S[4][4](1) =  8.62e-01 # [1e-12 cm^2/din]
+    CrystalSystem = 1 # [1]
+  }
+
+* Schottky { }
