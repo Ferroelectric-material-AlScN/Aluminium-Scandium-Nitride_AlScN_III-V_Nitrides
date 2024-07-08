@@ -1,0 +1,1 @@
+This is a parameter file for Aluminium Scandium Nitride where the results are fed with respect to reference papers that have been attached there are chances for descrepancies as this material has not been that much functional in the world .The parameter values can be adjusted based on the updates of the material in future
